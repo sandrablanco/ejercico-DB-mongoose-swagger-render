@@ -1,6 +1,3 @@
-const { version } = require("mongoose");
-const { serve } = require("swagger-ui-express");
-
 module.exports = {
     openapi: '3.0.3',
     info: {
@@ -9,7 +6,10 @@ module.exports = {
         description: 'API for managing tasks',
 
     },
-    servers: [
-        ports: 'http://localhost:8080',
+    servers: [ 
+        {
+          url: "http://localhost:8080",
+            description: "Local server",
+        },
         ],
-}
+};

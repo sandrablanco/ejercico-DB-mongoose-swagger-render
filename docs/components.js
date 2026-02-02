@@ -2,10 +2,10 @@ module.exports = {
     components: {
         schemas: {
             Tasks: {
-                Type: 'object',
+                type: 'string',
                 properties: {
                     _id: {
-                        type: 'objectId',
+                        type: 'string',
                         description: 'Unique identifier for the task',
                         example: '60d0fe4f5311236168a109ca',
                     },
