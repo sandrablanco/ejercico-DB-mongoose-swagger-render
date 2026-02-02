@@ -39,7 +39,8 @@ router.get("/id/:_id", async(req, res) => {
                 req.params._id,
         });
     }
-}, )
+}); 
+
 
 //MARK TASK AS COMPLETED (en este endpoint no le permitimos que edite el titulo)
 
@@ -58,18 +59,34 @@ router.put("/markAsCompleted/:_id", async(req, res) => {
                     req.params._id,
             });
         }
-    }),
+    });
 
     //UPDATE TASK
 
-    router.put("/id/:_id", async(req, res) => {
-        try {
-            const task = await Task.findByIdAndUpdate(req.params._id, req.body, { new: true })
-            res.send({ message: "task successfully updated", task });
-        } catch (error) {
-            console.error(error);
+   router.put("/id/:_id", async (req, res) => {
+    try {
+        const { title } = req.body;
+        if (!title) {
+            return res.status(400).send({
+                message: "Title is required to update a task",
+            });
         }
-    }),
+        const task = await Task.findByIdAndUpdate(
+            req.params._id,
+            { title },          
+            { new: true }
+        );
+        res.send({
+            message: "Task successfully updated",
+            task,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({
+            message: "There was a problem trying to update the task",
+        });
+    }
+});
 
     //DELETE TASK
 
@@ -83,5 +100,6 @@ router.put("/markAsCompleted/:_id", async(req, res) => {
                 .status(500)
                 .send({ message: "There was a problem trying to delete a task" });
         }
-    })
+    });
+    
 module.exports = router;
