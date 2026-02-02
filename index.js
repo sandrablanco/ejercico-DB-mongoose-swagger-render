@@ -13,6 +13,11 @@ app.use('/', routes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(docs));
 
 
-dbConnection();
+const startServer = async () => {
+  await dbConnection();
+  app.listen(PORT, () =>
+    console.log(`Server started on port ${PORT}`)
+  );
+};
 
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+startServer(); //evita que se intenten consultas sin conexión
