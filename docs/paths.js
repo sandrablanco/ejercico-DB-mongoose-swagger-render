@@ -1,24 +1,42 @@
-//ejemplo de post create task
-module.exports = {
-  paths: {
 
+  module.exports = {
+  paths: {
+    "/": {
+      get: {
+        tags: {
+          Tasks: "Get a task",
+        },
+        description: "Get Task",
+        operationId: "getTask",
+        parameters: [],
+        responses: {
+          200: {
+            description: "Task obtained successfully",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Task" },
+              },
+            },
+          },
+          500: {
+            description: "Server error",
+          },
+        },
+      },
+    },
     "/create": {
       post: {
-        tags: ["Tasks"],
-        summary: "Create a new task",
+        tags: {
+          Tasks: "Create a task",
+        },
+        description: "Create Task",
+        operationId: "createTask",
+        parameters: [],
         requestBody: {
-          required: true,
           content: {
             "application/json": {
               schema: {
-                type: "object",
-                properties: {
-                  title: {
-                    type: "string",
-                    example: "New task",
-                  },
-                },
-                required: ["title"],
+                $ref: "#/components/schemas/TaskInput",
               },
             },
           },
@@ -28,97 +46,88 @@ module.exports = {
             description: "Task created successfully",
           },
           500: {
-            description: "Internal server error",
+            description: "Server error",
           },
+        },
+      },
+    },
+
+    "/markAsCompleted/{_id}": {
+      put: {
+        tags: {
+          Tasks: "Update a task as completed",
+        },
+        description: "Update Task as completed",
+        operationId: "updateTaskAsCompleted",
+        parameters: [
+          {
+            name: "_id",
+            in: "path",
+            schema: {
+              $ref: "#/components/schemas/_id",
+            },
+            description: "Id of Task to be updated as completed",
+          },
+        ],
+        responses: {
+          200: { description: "Task updated successfully" },
+          404: { description: "Task not found" },
+          500: { description: "Server error" },
+        },
+      },
+    },
+    "/id/{_id}": {
+      put: {
+        tags: {
+          Tasks: "Update a task",
+        },
+        description: "Update Task",
+        operationId: "updateTask",
+        parameters: [
+          {
+            name: "_id",
+            in: "path",
+            schema: {
+              $ref: "#/components/schemas/_id",
+            },
+            description: "Id of Task to be updated",
+          },
+        ],
+        requestBody: {
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/TaskInput" },
+            },
+          },
+        },
+        responses: {
+          200: { description: "Task updated successfully" },
+          404: { description: "Task not found" },
+          500: { description: "Server error" },
+        },
+      },
+      delete: {
+        tags: {
+          Tasks: "Delete a task",
+        },
+        description: "Delete Task",
+        operationId: "deleteTask",
+        parameters: [
+          {
+            name: "_id",
+            in: "path",
+            schema: {
+              $ref: "#/components/schemas/_id",
+            },
+            description: "Id of Task to be updated",
+          },
+        ],
+        responses: {
+          200: { description: "Task deleted successfully" },
+          404: { description: "Task not found" },
+          500: { description: "Server error" },
         },
       },
     },
   },
-
-//GET
-"/": {
-      get: {
-        tags: ["Tasks"],
-        summary: "Get all tasks",
-        responses: {
-          200: {
-            description: "List of tasks",
-          },
-          500: {
-            description: "Internal server error",
-          },
-        },
-      },
-    },
-// GET BY ID
- "/id/{_id}": {
-      put: {
-        tags: ["Tasks"],
-        summary: "Update task title",
-        description: "Updates only the title of a task",
-        parameters: [
-          {
-            name: "_id",
-            in: "path",
-            required: true,
-            schema: {
-              type: "string",
-            },
-            description: "Task id",
-          },
-        ],
-        requestBody: {
-          required: true,
-          content: {
-            "application/json": {
-              schema: {
-                type: "object",
-                properties: {
-                  title: {
-                    type: "string",
-                    example: "Updated task title",
-                  },
-                },
-                required: ["title"],
-              },
-            },
-          },
-        },
-        responses: {
-          200: {
-            description: "Task updated successfully",
-          },
-          400: {
-            description: "Title is required",
-          },
-          500: {
-            description: "Internal server error",
-          },
-        },
-      },
-// DELETE
-      delete: {
-        tags: ["Tasks"],
-        summary: "Delete a task",
-        parameters: [
-          {
-            name: "_id",
-            in: "path",
-            required: true,
-            schema: {
-              type: "string",
-            },
-            description: "Task id",
-          },
-        ],
-        responses: {
-          200: {
-            description: "Task deleted successfully",
-          },
-          500: {
-            description: "Internal server error",
-          },
-        },
-      },
-    },
-  };
+};

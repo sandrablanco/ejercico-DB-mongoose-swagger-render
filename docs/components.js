@@ -1,26 +1,46 @@
 module.exports = {
-    components: {
-        schemas: {
-            Tasks: {
-                type: 'string',
-                properties: {
-                    _id: {
-                        type: 'string',
-                        description: 'Unique identifier for the task',
-                        example: '60d0fe4f5311236168a109ca',
-                    },
-                    title: {
-                        type: 'string',
-                        description: 'Title of the task',
-                        example: 'Complete the project documentation',
-                    },
-                    completed: {
-                        type: 'boolean',
-                        description: 'Status of the task',
-                        example: false,
-                    },    
-                }
-            }
-        }
-    }
-}        
+  components: {
+    schemas: {
+      Task: {
+        type: "object",
+        properties: {
+          _id: {
+            type: "objectId",
+            description: "task identification number",
+            example: "6201064b0028de7866e2b2c4",
+          },
+          title: {
+            type: "string",
+            description: "Title task to register",
+            example: "Create an awesome task",
+          },
+          completed: {
+            type: "boolean",
+            description: "Status of the task",
+            example: "false",
+          },
+        },
+      },
+      TaskInput: {
+        type: "object",
+        properties: {
+          title: {
+            type: "string",
+            description: "Title task to register",
+            example: "Create an awesome task",
+          },
+          completed: {
+            type: "boolean",
+            description: "Status of the task",
+            example: "false",
+          },
+        },
+      },
+      _id: {
+        type: "objectId",
+        description: "An id of a task",
+        example: "6201064b0028de7866e2b2c4",
+      },
+    },
+  },
+};

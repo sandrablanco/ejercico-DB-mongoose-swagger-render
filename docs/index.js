@@ -1,8 +1,8 @@
-const basicinfo = require("./basicinfo.js");
-const components = require("./components.js");
-const paths = require("./paths.js");
+const basicinfo = require("./basicinfo");
+const components = require("./components");
+const paths = require("./paths");
 module.exports = { 
     ...basicinfo,
     ...components,
-    ...paths,
+    ...paths
 };
